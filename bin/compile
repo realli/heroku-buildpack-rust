@@ -120,6 +120,12 @@ if [ $RUST_SKIP_BUILD -ne 1 ]; then
   # To debug git issues:
   #export RUST_LOG="cargo::sources::git=debug"
   # To debug compiler and linking issues, add `--verbose`.
+  echo "-----> Execute Custom Script before cargo build"
+  cd "$BUILD_DIR"
+  if [ -f "$BUILD_DIR/pre_build" ]; then
+      . "$BUILD_DIR/pre_build"
+  fi
+
   echo "-----> Building application using Cargo"
   cd "$BUILD_DIR/$BUILD_PATH"
   rm -rf target/
